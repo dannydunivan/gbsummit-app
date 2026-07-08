@@ -1,0 +1,83 @@
+/* -----------------------------------------------------------------------------
+ * Summit 2026 — Design Tokens (CSS variables)
+ * SINGLE SOURCE OF TRUTH for color, type, spacing, radius.
+ * Rebrand the whole app by editing these values. Ported from the Expo mockup's
+ * theme/tokens.ts (brand matched to gbsummit.org / the "summit 26" logo).
+ * -------------------------------------------------------------------------- */
+:root {
+  /* Ink (near-black wordmark color) */
+  --ink: #1a1a1c;
+  --ink-strong: #0e0e10;
+  --ink-soft: #5c5c60;
+  --ink-faint: #9a9aa0;
+
+  /* Signature red (the "26" box) */
+  --red: #d8322f;
+  --red-dark: #b0231f;
+  --red-light: #e76562;
+
+  /* Surfaces */
+  --white: #ffffff;
+  --off-white: #f4f4f5;
+  --sunken: #ececee;
+  --line: #e4e4e7;
+  --line-soft: #efeff1;
+
+  /* Feedback */
+  --success: #2e7d55;
+  --success-surface: #e5f2eb;
+  --pinned-surface: #fcedec;
+  --pinned-border: #f2c9c7;
+
+  /* Semantic roles */
+  --bg: var(--off-white);
+  --card: var(--white);
+  --text: var(--ink);
+  --text-secondary: var(--ink-soft);
+  --text-faint: var(--ink-faint);
+  --accent: var(--red);
+  --tab-active: var(--red);
+  --tab-inactive: var(--ink-faint);
+
+  /* Type */
+  --font-display: 'Urbanist', system-ui, -apple-system, sans-serif;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif;
+
+  /* Spacing scale */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 12px;
+  --sp-lg: 16px;
+  --sp-xl: 24px;
+  --sp-2xl: 32px;
+  --sp-3xl: 48px;
+
+  /* Radius */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* Elevation */
+  --shadow-card: 0 4px 12px rgba(26, 26, 28, 0.07);
+  --shadow-float: 0 8px 24px rgba(26, 26, 28, 0.12);
+
+  /* Layout */
+  --app-max-width: 480px;
+  --tabbar-height: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+/* Per-session-type tag colors (monochrome + red; green/blue for kids/youth
+ * wayfinding). Ported from SessionTypeColors. */
+:root {
+  --type-worship-fg: #1a1a1c;   --type-worship-bg: #ececee;
+  --type-keynote-fg: #d8322f;   --type-keynote-bg: #fbe9e8;
+  --type-training-fg: #3f4756;  --type-training-bg: #e9ebef;
+  --type-business-fg: #1a1a1c;  --type-business-bg: #e2e2e5;
+  --type-kids-fg: #0f7b6c;      --type-kids-bg: #e2f1ef;
+  --type-youth-fg: #2563a8;     --type-youth-bg: #e5eef7;
+  --type-break-fg: #7a7a80;     --type-break-bg: #f1f1f3;
+}

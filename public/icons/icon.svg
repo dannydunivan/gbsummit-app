@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1A1A1C"/>
+  <text x="256" y="196" text-anchor="middle" font-family="Urbanist, Arial, sans-serif" font-weight="800" font-size="92" letter-spacing="-2" fill="#F4F4F5">summit</text>
+  <rect x="176" y="240" width="160" height="150" rx="24" fill="#D8322F"/>
+  <text x="256" y="356" text-anchor="middle" font-family="Urbanist, Arial, sans-serif" font-weight="800" font-size="120" fill="#FFFFFF">26</text>
+</svg>

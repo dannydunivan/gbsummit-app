@@ -1,0 +1,218 @@
+/* Global / reset -------------------------------------------------------------*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--ink); /* letterbox behind the app frame */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100%;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* App shell -------------------------------------------------------------------*/
+.app-shell {
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  min-height: 100dvh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.25);
+}
+
+.app-main {
+  flex: 1;
+  padding-bottom: calc(var(--tabbar-height) + var(--safe-bottom) + var(--sp-lg));
+}
+
+/* Screen scaffolding ----------------------------------------------------------*/
+.screen {
+  padding: var(--sp-lg);
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.screen-header {
+  padding: calc(var(--safe-top) + var(--sp-lg)) var(--sp-lg) var(--sp-md);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: var(--text);
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.faint {
+  color: var(--text-faint);
+}
+
+/* Card ------------------------------------------------------------------------*/
+.card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--line-soft);
+}
+
+.card-pad {
+  padding: var(--sp-lg);
+}
+
+/* Section label ---------------------------------------------------------------*/
+.section-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: var(--sp-xl) 0 var(--sp-md);
+}
+.section-label:first-child {
+  margin-top: 0;
+}
+
+/* Pills / tags ---------------------------------------------------------------*/
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+}
+
+/* Buttons ---------------------------------------------------------------------*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-sm);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 13px var(--sp-lg);
+  border-radius: var(--r-md);
+  transition: transform 0.08s ease, background 0.15s ease, opacity 0.15s ease;
+  width: 100%;
+  text-align: center;
+}
+.btn:active {
+  transform: scale(0.98);
+}
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background: var(--red-dark);
+}
+.btn-dark {
+  background: var(--ink);
+  color: var(--white);
+}
+.btn-outline {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+/* Utility ---------------------------------------------------------------------*/
+.stack > * + * {
+  margin-top: var(--sp-md);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+.list-reset {
+  list-style: none;
+  padding: 0;
+}
