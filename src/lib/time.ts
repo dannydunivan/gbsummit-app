@@ -1,20 +1,47 @@
-import { DEFAULT_CONFIG, type Session, sessions } from '@/content/2026';
+import { type Session, sessions } from '@/content/2026';
 
 /**
- * The "now" the app reasons about for "Coming Up Next".
- * The event is July 13–15, 2026. If the real clock is inside (or after the
- * start of) the event window, use it; otherwise fall back to the demo time so
- * the feature has something to show before the doors open.
+ * Real-clock time helpers. The app has three phases:
+ *   before — pre-event: Home shows a countdown + the first thing coming up
+ *   during — July 13–15: "Happening Now" / "Coming Up Next" run live
+ *   after  — post-event: Home shows a wrap-up card
+ *
+ * Session times are parsed as device-local time. Attendees are on site
+ * (Central), so this is correct where it matters; remote viewers may see
+ * live-state shifted by their offset, which is standard for event apps.
  */
+
+export const EVENT_START = new Date('2026-07-13T00:00:00');
+/** Exclusive end — first moment after the event. */
+export const EVENT_END = new Date('2026-07-16T00:00:00');
+
+export type EventPhase = 'before' | 'during' | 'after';
+
 export function appNow(): Date {
-  const real = new Date();
-  const eventStart = new Date('2026-07-13T00:00:00');
-  const eventEnd = new Date('2026-07-16T00:00:00');
-  if (real >= eventStart && real < eventEnd) return real;
-  return new Date(DEFAULT_CONFIG.currentTime);
+  return new Date();
 }
 
-/** "HH:MM" (24h, local date-agnostic) → a Date on the given day. */
+export function eventPhase(now: Date = appNow()): EventPhase {
+  if (now < EVENT_START) return 'before';
+  if (now < EVENT_END) return 'during';
+  return 'after';
+}
+
+/** Whole days until the event starts (ceil), for the pre-event countdown. */
+export function daysUntilEvent(now: Date = appNow()): number {
+  return Math.max(0, Math.ceil((EVENT_START.getTime() - now.getTime()) / 86_400_000));
+}
+
+/** Local YYYY-MM-DD for `d` (NOT toISOString — that's UTC and shifts the date in the evening). */
+export function localDateId(d: Date): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(d);
+}
+
+/** "HH:MM" (24h) on the session's day → a local Date. */
 function sessionStart(s: Session): Date {
   return new Date(`${s.day}T${s.startTime}:00`);
 }
@@ -53,7 +80,7 @@ export function upcomingSessions(now: Date): Session[] {
 
 /**
  * "Coming Up Next" pick: prefer a marquee live/next session (skip pure breaks
- * unless nothing else qualifies).
+ * unless nothing else qualifies). Returns null once the event is over.
  */
 export function comingUpNext(now: Date): { session: Session; live: boolean } | null {
   const live = liveSessions(now).filter((s) => s.type !== 'break');

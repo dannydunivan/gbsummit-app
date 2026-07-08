@@ -292,6 +292,24 @@
   padding-bottom: var(--sp-lg);
 }
 
+/* --- Countdown / wrap card ---------------------------------------------------*/
+.countdown-card {
+  text-align: center;
+  border: 1px solid var(--pinned-border);
+  background: linear-gradient(180deg, #fff 0%, var(--pinned-surface) 100%);
+}
+.countdown-days {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--red);
+}
+.countdown-sub {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
 /* --- Install card ----------------------------------------------------------- */
 .install-card {
   position: relative;

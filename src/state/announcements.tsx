@@ -8,34 +8,33 @@ import {
   type ReactNode,
 } from 'react';
 import { seedAnnouncements, type Announcement } from '@/content/2026';
+import { appNow } from '@/lib/time';
 
 /**
- * Announcements store. Phase 1 keeps the feed in localStorage so the demo feels
- * live and "read" state persists. Phase 2 will merge pushed items (FCM) into the
- * same store — `addAnnouncement` is the seam a push handler calls.
+ * Announcements store.
+ *
+ * The deployed seed is ALWAYS the source of truth for content — localStorage
+ * only remembers which ids the user has read, so redeploying corrected or new
+ * announcements reaches every visitor. Items are timestamp-gated: an item
+ * appears only once its `timestamp` has passed, which makes event-day seeds
+ * behave like scheduled announcements.
+ *
+ * `addAnnouncement` is the Phase 2 seam — a push handler will call it so a
+ * pushed item also lands in the visible feed (in-memory for now).
  */
 
-const FEED_KEY = 'summit2026.feed.v1';
 const READ_KEY = 'summit2026.read.v1';
+/** v1.0 persisted the whole feed; clear it so stale content can't linger. */
+const LEGACY_FEED_KEY = 'summit2026.feed.v1';
 
 interface AnnouncementsCtx {
-  announcements: Announcement[]; // newest first, pinned pulled to top
+  announcements: Announcement[]; // visible: released, pinned first, newest first
   unreadCount: number;
   markAllRead: () => void;
   addAnnouncement: (a: Announcement) => void;
 }
 
 const Ctx = createContext<AnnouncementsCtx | null>(null);
-
-function loadFeed(): Announcement[] {
-  try {
-    const raw = localStorage.getItem(FEED_KEY);
-    if (raw) return JSON.parse(raw) as Announcement[];
-  } catch {
-    /* ignore */
-  }
-  return seedAnnouncements;
-}
 
 function loadRead(): Set<string> {
   try {
@@ -48,34 +47,42 @@ function loadRead(): Set<string> {
 }
 
 export function AnnouncementsProvider({ children }: { children: ReactNode }) {
-  const [feed, setFeed] = useState<Announcement[]>(loadFeed);
   const [read, setRead] = useState<Set<string>>(loadRead);
+  const [pushed, setPushed] = useState<Announcement[]>([]);
 
   useEffect(() => {
-    localStorage.setItem(FEED_KEY, JSON.stringify(feed));
-  }, [feed]);
+    try {
+      localStorage.removeItem(LEGACY_FEED_KEY);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem(READ_KEY, JSON.stringify([...read]));
   }, [read]);
 
   const announcements = useMemo(() => {
-    return [...feed].sort((a, b) => {
-      if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
-      return b.timestamp.localeCompare(a.timestamp);
-    });
-  }, [feed]);
+    const now = appNow().getTime();
+    return [...seedAnnouncements, ...pushed]
+      .filter((a) => new Date(a.timestamp).getTime() <= now)
+      .sort((a, b) => {
+        if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+        return b.timestamp.localeCompare(a.timestamp);
+      });
+  }, [pushed]);
 
   const unreadCount = useMemo(
-    () => feed.filter((a) => !read.has(a.id)).length,
-    [feed, read],
+    () => announcements.filter((a) => !read.has(a.id)).length,
+    [announcements, read],
   );
 
   const markAllRead = useCallback(() => {
-    setRead(new Set(feed.map((a) => a.id)));
-  }, [feed]);
+    setRead(new Set(announcements.map((a) => a.id)));
+  }, [announcements]);
 
   const addAnnouncement = useCallback((a: Announcement) => {
-    setFeed((prev) => (prev.some((x) => x.id === a.id) ? prev : [a, ...prev]));
+    setPushed((prev) => (prev.some((x) => x.id === a.id) ? prev : [a, ...prev]));
   }, []);
 
   const value: AnnouncementsCtx = {

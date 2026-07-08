@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { DAYS, sessionsForDay, type DayId } from '@/content/2026';
-import { appNow, liveSessions } from '@/lib/time';
+import { appNow, liveSessions, localDateId } from '@/lib/time';
 import { SessionCard } from '@/components/SessionCard';
 
 /** Pick the day that matches "now" if the event is running, else Day 1. */
 function defaultDay(): DayId {
-  const iso = appNow().toISOString().slice(0, 10);
-  const match = DAYS.find((d) => d.id === iso);
+  const today = localDateId(appNow());
+  const match = DAYS.find((d) => d.id === today);
   return match?.id ?? DAYS[0].id;
 }
 

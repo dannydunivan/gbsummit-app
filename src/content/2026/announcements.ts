@@ -1,59 +1,60 @@
 import type { Announcement } from './types';
 
 /**
- * Seed announcements — the durable feed shown on Home. In Phase 1 this is the
- * local demo feed; in Phase 2 a real push (FCM) delivers new items that also
- * land here. One item is pinned.
+ * The announcements feed. Items only appear once their `timestamp` has passed
+ * (see src/state/announcements.tsx), so event-day items below are effectively
+ * scheduled: they surface automatically at the right moment during Summit.
  *
- * BACKEND SEAM — an admin scheduler will create these with a `scheduledFor`
- * timestamp; real push (FCM) delivers them.
+ * EVERYTHING here must be true and sourced from gbsummit.org or the client —
+ * no invented logistics. Phase 2 replaces/extends this with live-pushed items.
  */
 export const seedAnnouncements: Announcement[] = [
   {
     id: 'a-welcome',
-    timestamp: '2026-07-10T15:00:00',
+    timestamp: '2026-07-06T12:00:00',
     title: 'Welcome to Summit 2026!',
     body:
-      'We can’t wait to see you July 13–15 at Connection Point Church in Jackson, MO. Pick up your badge at the Help Desk when you arrive, and check the Info tab if it’s your first Summit.',
+      'We can’t wait to see you July 13–15 at Connection Point Church in Jackson, MO. Doors open and registration begins Monday at 8:00 AM.',
     pinned: true,
   },
   {
-    id: 'a-parking',
-    timestamp: '2026-07-13T07:30:00',
-    title: 'Doors & parking are open',
+    id: 'a-plan',
+    timestamp: '2026-07-07T09:00:00',
+    title: 'Plan your week',
     body:
-      'Doors open at 8:00 AM with registration. Use the main Deerwood Dr. entrance; overflow parking is signed along the east side.',
-    pinned: false,
-  },
-  {
-    id: 'a-wifi',
-    timestamp: '2026-07-13T07:45:00',
-    title: 'Guest WiFi is live',
-    body: 'Network: Summit2026 · Password: welcome2026. Open to all attendees all three days.',
+      'Browse the three-day Schedule, pick your Tuesday breakouts from the catalog, and check Where to Eat for options in Jackson and Cape Girardeau.',
     pinned: false,
   },
   {
     id: 'a-ga',
-    timestamp: '2026-07-13T09:40:00',
+    timestamp: '2026-07-13T09:30:00',
     title: 'General Association Meeting at 10:00',
     body:
-      'Delegates, please be seated by 9:55 in the Worship Center. The live packet has the agenda, reports, and any motions — open it from the Schedule.',
+      'The business meeting of the General Association begins at 10:00 AM in the Worship Center. Open the packet from the session details in the Schedule.',
     pinned: false,
   },
   {
     id: 'a-lunch-mon',
     timestamp: '2026-07-13T11:30:00',
-    title: 'Lunch on your own today',
+    title: 'Lunch on your own',
     body:
-      'Monday lunch is on your own (11:30–2:00). See the Info tab for nearby Jackson and Cape Girardeau options.',
+      'The Monday lunch break runs 11:30–2:00 — see Where to Eat for nearby options. Session 1 with Vince Daniel starts at 2:00 PM in the Worship Center.',
+    pinned: false,
+  },
+  {
+    id: 'a-breakfast',
+    timestamp: '2026-07-14T07:00:00',
+    title: 'Breakfast with the Missionaries',
+    body:
+      'Tuesday starts at 7:30 AM with Breakfast with the Missionaries in the Civic Center Gym, directly across the road from Connection Point.',
     pinned: false,
   },
   {
     id: 'a-breakouts',
-    timestamp: '2026-07-14T08:30:00',
-    title: 'Tuesday breakouts posted',
+    timestamp: '2026-07-14T12:30:00',
+    title: 'Breakouts this afternoon',
     body:
-      'Breakout Sessions 1 & 2 run this afternoon across the Breakout Rooms. Browse presenters and topics in the Schedule.',
+      'Breakout Session 1 (1:30) and Session 2 (3:00) run across Connection Point and the Civic Center. Browse the full catalog from the Schedule.',
     pinned: false,
   },
   {
@@ -62,14 +63,6 @@ export const seedAnnouncements: Announcement[] = [
     title: 'Commissioning Service tonight',
     body:
       'Join us at 7:00 PM for Session 4 with Dr. Danny Dunivan and the Commissioning Service in the Worship Center.',
-    pinned: false,
-  },
-  {
-    id: 'a-photo',
-    timestamp: '2026-07-15T11:25:00',
-    scheduledFor: '2026-07-15T11:25:00',
-    title: 'Group photo after the trainings',
-    body: 'Join us on the front steps right after the Wednesday trainings for the Summit 2026 group photo!',
     pinned: false,
   },
 ];

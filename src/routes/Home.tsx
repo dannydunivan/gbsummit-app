@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { EVENT } from '@/content/2026';
-import { appNow, comingUpNext, relativeTime } from '@/lib/time';
+import { appNow, comingUpNext, daysUntilEvent, eventPhase, relativeTime } from '@/lib/time';
 import { useAnnouncements } from '@/state/announcements';
 import { SessionCard } from '@/components/SessionCard';
 import { Icon } from '@/components/Icon';
@@ -8,6 +8,7 @@ import { InstallCard } from '@/components/InstallCard';
 
 export function Home() {
   const now = appNow();
+  const phase = eventPhase(now);
   const next = comingUpNext(now);
   const { announcements, markAllRead } = useAnnouncements();
   const pinned = announcements.find((a) => a.pinned);
@@ -29,11 +30,39 @@ export function Home() {
       </header>
 
       <div className="screen home-screen">
-        {/* Coming up next */}
+        {/* Pre-event countdown */}
+        {phase === 'before' && (
+          <section>
+            <div className="card card-pad countdown-card">
+              <div className="countdown-days">
+                {daysUntilEvent(now) === 1 ? 'Tomorrow!' : `${daysUntilEvent(now)} days away`}
+              </div>
+              <p className="muted countdown-sub">
+                Summit begins Monday, July 13 — doors open and registration at 8:00 AM.
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* Post-event wrap */}
+        {phase === 'after' && (
+          <section>
+            <div className="card card-pad countdown-card">
+              <div className="countdown-days">That’s a wrap!</div>
+              <p className="muted countdown-sub">
+                Thank you for joining us at Summit 2026 in Jackson. See you next year!
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* Coming up next / happening now */}
         {next && (
           <section>
             <div className="section-label">
-              <h2>{next.live ? 'Happening Now' : 'Coming Up Next'}</h2>
+              <h2>
+                {next.live ? 'Happening Now' : phase === 'before' ? 'First Up' : 'Coming Up Next'}
+              </h2>
               <Link to="/schedule" className="link-more">
                 Full schedule <Icon name="chevron" size={14} />
               </Link>

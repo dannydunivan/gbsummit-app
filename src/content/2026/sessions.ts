@@ -1,12 +1,11 @@
 import type { DayId, Session } from './types';
 
 /**
- * BACKEND SEAM — live business-session packet.
- * The General Association session points at a live, editable web page (not a
- * static PDF) so reports and motions stay current. Replace with the real URL.
+ * Business-session packet. Served from public/packet.pdf — currently a
+ * placeholder page; swap in the real PDF from the client when it arrives
+ * (same filename, redeploy — no code change needed).
  */
-export const PACKET_URL = 'https://www.gbsummit.org/packet';
-export const PACKET_PDF_URL = 'https://www.gbsummit.org/packet.pdf';
+export const PACKET_URL = '/packet.pdf';
 
 export const DAYS: { id: DayId; label: string; short: string }[] = [
   { id: '2026-07-13', label: 'Monday, July 13', short: 'Mon' },
@@ -43,7 +42,7 @@ export const sessions: Session[] = [
     location: 'Worship Center',
     speakerIds: [],
     description:
-      'The business meeting of the General Association: reports, the agenda, and any motions. See the live packet for everything before the floor.',
+      'The business meeting of the General Association: reports, the agenda, and any motions. Open the packet below for everything before the floor.',
     packetUrl: PACKET_URL,
   },
   {
@@ -55,7 +54,8 @@ export const sessions: Session[] = [
     type: 'break',
     location: 'On your own',
     speakerIds: [],
-    description: 'Lunch is on your own. See the Info tab for nearby Jackson and Cape Girardeau options.',
+    description:
+      'Lunch is on your own. See Where to Eat (from Home or the Info tab) for nearby Jackson and Cape Girardeau options.',
   },
   {
     id: 's-mon-s1',
