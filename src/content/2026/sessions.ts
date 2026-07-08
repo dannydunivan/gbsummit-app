@@ -41,8 +41,7 @@ export const sessions: Session[] = [
     type: 'business',
     location: 'Worship Center',
     speakerIds: [],
-    description:
-      'The business meeting of the General Association: reports, the agenda, and any motions. Open the packet below for everything before the floor.',
+    description: 'The business meeting of the General Association: reports, the agenda, and any motions.',
     packetUrl: PACKET_URL,
   },
   {
