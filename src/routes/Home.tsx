@@ -21,7 +21,7 @@ export function Home() {
         <img className="home-hero-bg" src="/brand/summit-hero.png" alt="" aria-hidden="true" />
         <div className="home-hero-scrim" />
         <div className="home-hero-content">
-          <img className="home-logo" src="/brand/summit26-logo.png" alt="Summit 26" />
+          <img className="home-logo" src="/brand/summit26-logo-white.png" alt="Summit 26" />
           <p className="home-hero-dates">{EVENT.datesLabel}</p>
           <p className="home-hero-venue">
             {EVENT.venueName} · {EVENT.venueShort}
