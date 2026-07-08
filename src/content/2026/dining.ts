@@ -83,6 +83,12 @@ export const diningAreas: DiningArea[] = [
         address: '107 E Adams St, Jackson, MO 63755',
         note: 'Local roastery in the historic 1928 Marquette Tower.',
       },
+      {
+        name: 'American Ice Cream & More',
+        cuisine: 'Ice cream · diner classics',
+        address: '221 S Hope St, Jackson, MO 63755',
+        note: 'Closed Mondays.',
+      },
     ],
   },
   {
@@ -112,6 +118,18 @@ export const diningAreas: DiningArea[] = [
       },
     ],
     coffeeAndDessert: [
+      {
+        name: 'Red Banner Coffee Roasters',
+        cuisine: 'Coffee roastery & café',
+        address: '1 N Spanish St, Cape Girardeau, MO 63701',
+        note: 'Historic downtown, a block from the riverfront.',
+      },
+      {
+        name: 'Victoria’s Creamery',
+        cuisine: 'Ice cream parlor',
+        address: '137 N Main St, Cape Girardeau, MO 63701',
+        note: 'Historic downtown, near the riverfront.',
+      },
       {
         name: 'Starbucks',
         cuisine: 'Coffee',
