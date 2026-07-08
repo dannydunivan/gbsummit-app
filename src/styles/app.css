@@ -744,6 +744,32 @@
   font-size: 13px;
   margin-top: 4px;
 }
+.restaurant-address {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 5px;
+}
+.restaurant-address svg {
+  color: var(--red);
+  flex-shrink: 0;
+}
+.restaurant-address span {
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 2px;
+}
+.dining-sub {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  margin: var(--sp-lg) 0 var(--sp-md);
+}
 
 /* --- Breakouts (grouped) ---------------------------------------------------- */
 .breakout-block-time {
