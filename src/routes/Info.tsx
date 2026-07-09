@@ -83,6 +83,10 @@ export function Info() {
               <Icon name="info" size={22} />
               <span>Ask a Question</span>
             </Link>
+            <Link to="/sponsors" className="quick-tile card">
+              <Icon name="heart" size={22} />
+              <span>Our Sponsors</span>
+            </Link>
           </div>
         </section>
       </div>

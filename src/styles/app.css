@@ -871,3 +871,64 @@
   max-width: 220px;
   margin: var(--sp-lg) auto 0;
 }
+
+/* --- Sponsors ---------------------------------------------------------------- */
+.sponsors-intro {
+  font-size: 14px;
+  margin-bottom: var(--sp-lg);
+}
+.tier-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: baseline;
+}
+.tier-dot-platinum {
+  background: linear-gradient(135deg, #b8c4cc, #7d8b96);
+}
+.tier-dot-silver {
+  background: linear-gradient(135deg, #d7d7db, #9d9da3);
+}
+.tier-dot-bronze {
+  background: linear-gradient(135deg, #d9a869, #a4713a);
+}
+.sponsor-card {
+  display: grid;
+  place-items: center;
+  background: #fff;
+  padding: var(--sp-lg) var(--sp-lg);
+  border-top: 3px solid transparent;
+}
+.sponsor-card-platinum {
+  border-top-color: #8d9aa5;
+  min-height: 150px;
+}
+.sponsor-card-silver {
+  border-top-color: #b9b9bf;
+  min-height: 120px;
+}
+.sponsor-card-bronze {
+  border-top-color: #b8834b;
+  min-height: 120px;
+}
+.sponsor-logo {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.sponsor-card-platinum .sponsor-logo {
+  max-width: min(280px, 100%);
+  max-height: 190px;
+}
+.sponsor-card-silver .sponsor-logo,
+.sponsor-card-bronze .sponsor-logo {
+  max-width: min(230px, 100%);
+  max-height: 150px;
+}
+.sponsors-foot {
+  text-align: center;
+  font-size: 12.5px;
+  margin-top: var(--sp-lg);
+}

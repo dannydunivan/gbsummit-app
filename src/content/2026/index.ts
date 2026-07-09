@@ -10,3 +10,4 @@ export * from './breakouts';
 export * from './announcements';
 export * from './info';
 export * from './dining';
+export * from './sponsors';

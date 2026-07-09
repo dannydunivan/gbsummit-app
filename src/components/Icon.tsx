@@ -13,7 +13,8 @@ export type IconName =
   | 'location'
   | 'external'
   | 'phone'
-  | 'check';
+  | 'check'
+  | 'heart';
 
 const paths: Record<IconName, JSX.Element> = {
   home: (
@@ -56,6 +57,9 @@ const paths: Record<IconName, JSX.Element> = {
     <path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" />
   ),
   check: <path d="m5 12 5 5 9-11" />,
+  heart: (
+    <path d="M12 20.5s-7.5-4.7-9.3-9.2C1.3 7.7 3.6 4.5 7 4.5c2 0 3.7 1.1 5 2.9 1.3-1.8 3-2.9 5-2.9 3.4 0 5.7 3.2 4.3 6.8-1.8 4.5-9.3 9.2-9.3 9.2Z" />
+  ),
 };
 
 export function Icon({
