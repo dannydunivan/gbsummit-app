@@ -14,38 +14,108 @@
     "pinned": false
   },
   {
-    "id": "a-ga",
-    "timestamp": "2026-07-13T09:30:00",
-    "title": "General Association Meeting at 10:00",
-    "body": "The business meeting of the General Association begins at 10:00 AM in the Worship Center. Open the packet from the session details in the Schedule.",
+    "id": "a-mon-0730",
+    "timestamp": "2026-07-13T07:30:00",
+    "title": "Welcome to Summit!",
+    "body": "👋 Welcome to Summit! Registration opens at 8:00 AM. We're excited you're here!",
     "pinned": false
   },
   {
-    "id": "a-lunch-mon",
-    "timestamp": "2026-07-13T11:30:00",
-    "title": "Lunch on your own",
-    "body": "The Monday lunch break runs 11:30–2:00 — see Where to Eat for nearby options. Session 1 with Vince Daniel starts at 2:00 PM in the Worship Center.",
+    "id": "a-mon-0945",
+    "timestamp": "2026-07-13T09:45:00",
+    "title": "General Association at 10:00",
+    "body": "General Association begins at 10:00 AM. Make your way to the auditorium—we'll get started soon.",
     "pinned": false
   },
   {
-    "id": "a-breakfast",
+    "id": "a-mon-1330",
+    "timestamp": "2026-07-13T13:30:00",
+    "title": "Session 1 this afternoon",
+    "body": "Session One is almost here! Join us for an incredible afternoon of worship followed by a keynote from Vince Daniel.",
+    "pinned": false
+  },
+  {
+    "id": "a-mon-1545",
+    "timestamp": "2026-07-13T15:45:00",
+    "title": "Dinner break",
+    "body": "Enjoy dinner! We'll gather back together for the evening session at 7:00 PM.",
+    "pinned": false
+  },
+  {
+    "id": "a-mon-1840",
+    "timestamp": "2026-07-13T18:40:00",
+    "title": "Tonight at 7:00 PM",
+    "body": "We're back tonight at 7:00 PM! Join us for a powerful evening of worship and a message from Clint Cook. You won't want to miss what's in store!",
+    "pinned": false
+  },
+  {
+    "id": "a-mon-2035",
+    "timestamp": "2026-07-13T20:35:00",
+    "title": "Thanks for a great first day",
+    "body": "Thanks for a great first day! Tomorrow begins with Breakfast with Missionaries at 7:30 AM, followed by Session 3 at 9:00 AM.",
+    "pinned": false
+  },
+  {
+    "id": "a-tue-0700",
     "timestamp": "2026-07-14T07:00:00",
-    "title": "Breakfast with the Missionaries",
-    "body": "Tuesday starts at 7:30 AM with Breakfast with the Missionaries in the Civic Center Gym, directly across the road from Connection Point.",
+    "title": "Breakfast with Missionaries",
+    "body": "☕ Good morning! Breakfast with Missionaries begins at 7:30 AM in the Civic Center Gym.",
     "pinned": false
   },
   {
-    "id": "a-breakouts",
-    "timestamp": "2026-07-14T12:30:00",
-    "title": "Breakouts this afternoon",
-    "body": "Breakout Session 1 (1:30) and Session 2 (3:00) run across Connection Point and the Civic Center. Browse the full catalog from the Schedule.",
+    "id": "a-tue-0845",
+    "timestamp": "2026-07-14T08:45:00",
+    "title": "Session 3 at 9:00 AM",
+    "body": "Session 3 begins at 9:00 AM. Grab your coffee and join us for a great morning together.",
     "pinned": false
   },
   {
-    "id": "a-commissioning",
-    "timestamp": "2026-07-14T18:30:00",
-    "title": "Commissioning Service tonight",
-    "body": "Join us at 7:00 PM for Session 4 with Dr. Danny Dunivan and the Commissioning Service in the Worship Center.",
+    "id": "a-tue-1050",
+    "timestamp": "2026-07-14T10:50:00",
+    "title": "Super Sessions at 11:00",
+    "body": "Super Sessions begin at 11:00 AM. Head to your selected training location—we'll see you there!",
+    "pinned": false
+  },
+  {
+    "id": "a-tue-1320",
+    "timestamp": "2026-07-14T13:20:00",
+    "title": "Breakout Sessions at 1:30",
+    "body": "Breakout Sessions begin at 1:30 PM. Check the app if you need room locations.",
+    "pinned": false
+  },
+  {
+    "id": "a-tue-1545",
+    "timestamp": "2026-07-14T15:45:00",
+    "title": "Dinner break",
+    "body": "Enjoy dinner! We'll gather again at 7:00 PM for worship, the keynote, and our Commissioning Service.",
+    "pinned": false
+  },
+  {
+    "id": "a-tue-1845",
+    "timestamp": "2026-07-14T18:45:00",
+    "title": "Tonight: Commissioning Service",
+    "body": "Join us at 7:00 PM for worship, a keynote from Dr. Danny Dunivan, and our special Commissioning Service as we celebrate those answering God's call.",
+    "pinned": false
+  },
+  {
+    "id": "a-tue-2050",
+    "timestamp": "2026-07-14T20:50:00",
+    "title": "Thank you for today",
+    "body": "Thank you for joining us today! Tomorrow's CLN Teaching Sessions begin at 9:00 AM.",
+    "pinned": false
+  },
+  {
+    "id": "a-wed-0830",
+    "timestamp": "2026-07-15T08:30:00",
+    "title": "CLN Teaching Sessions at 9:00",
+    "body": "Good morning! CLN Teaching Sessions begin at 9:00 AM. Let's finish Summit strong!",
+    "pinned": false
+  },
+  {
+    "id": "a-wed-1200",
+    "timestamp": "2026-07-15T12:00:00",
+    "title": "Thank you!",
+    "body": "Thank you for being part of Summit 2026. We're grateful you joined us!",
     "pinned": false
   }
 ]
