@@ -37,7 +37,7 @@ export function Info() {
           <Link
             to="/maps"
             className="quick-tile card quick-tile-wide"
-            style={{ marginTop: 'var(--sp-sm)' }}
+            style={{ marginTop: 'var(--sp-sm)', marginBottom: 'var(--sp-xl)' }}
           >
             <Icon name="pin" size={22} />
             <span>Venue Maps</span>
