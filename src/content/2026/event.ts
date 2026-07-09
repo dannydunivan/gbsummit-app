@@ -29,8 +29,6 @@ export const CONTACT_EMAIL = 'carol.lawrence@generalbaptist.com';
  * main site; the Jackson Civic Center (directly across E Deerwood Dr.) is the
  * secondary site — it hosts the missionary breakfast, several breakouts, the
  * Wednesday trainings, and the youth gathering.
- *
- * NOTE: `civic.blurb` is placeholder copy — replace with the client's wording.
  */
 export const VENUES = {
   main: {

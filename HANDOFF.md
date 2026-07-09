@@ -141,9 +141,11 @@ Read these first to orient:
 
 ## 6. Waiting on the client (Danny)
 
-1. **Civic Center copy** — he offered wording for the secondary-site
-   description; placeholder lives in `VENUES.civic.blurb` (`src/content/2026/event.ts`).
-2. **Real business packet PDF** → replace `public/packet.pdf`.
+1. Civic Center copy — APPROVED as-is 2026-07-09 (client signed off on the
+   existing `VENUES.civic.blurb`).
+2. **Real business packet PDF** → replace `public/packet.pdf` — IN PROGRESS,
+   Danny is producing it (2026-07-09). Swap same filename + push; no code
+   changes.
 3. **Custom domain — DONE 2026-07-09.** app.gbsummit.org is the site's
    PRIMARY custom domain (Netlify required primary, not alias; free plan
    can't disable the eventual netlify.app→primary redirect). Cert issued,
