@@ -15,7 +15,14 @@ The **installable PWA event app** for General Baptist Ministries **Summit 2026**
 as the secondary site).
 
 - **Project:** `~/Claude Code/gbsummit-app` (git repo; this file lives in it)
-- **LIVE:** https://gbm-summit-2026.netlify.app — already shared with the GBM team
+- **LIVE: https://app.gbsummit.org** (canonical since 2026-07-09 — use this in
+  ALL promotion/QR/instructions). The original
+  https://gbm-summit-2026.netlify.app still serves the site directly (no
+  redirect observed yet, but Netlify may start 301ing it to the primary at
+  any time — /announcements.json carries `Access-Control-Allow-Origin: *`
+  so pre-domain installs keep their feed either way). Installs + push
+  subscriptions are ORIGIN-SCOPED: pre-2026-07-09 installs live on the
+  netlify.app origin and should reinstall once from app.gbsummit.org.
 - **Client/user:** Dr. Danny Dunivan, President of GBM (also a keynote speaker)
 - The old Expo mockup at `~/Claude Code/summit2026` was the original content
   source — it is now **outdated**; this repo is the source of truth.
@@ -137,11 +144,12 @@ Read these first to orient:
 1. **Civic Center copy** — he offered wording for the secondary-site
    description; placeholder lives in `VENUES.civic.blurb` (`src/content/2026/event.ts`).
 2. **Real business packet PDF** → replace `public/packet.pdf`.
-3. **Custom domain `app.gbsummit.org`** — CNAME as a Netlify custom domain
-   (NOT a redirect; PWA install/push are origin-scoped). Declined "for now" —
-   should happen BEFORE wide promotion/QR codes, since installs (and now push
-   subscriptions) don't migrate across origins. Claude generates the DNS
-   instructions once the domain is added in Netlify.
+3. **Custom domain — DONE 2026-07-09.** app.gbsummit.org is the site's
+   PRIMARY custom domain (Netlify required primary, not alias; free plan
+   can't disable the eventual netlify.app→primary redirect). Cert issued,
+   verified end-to-end. Danny's website manager added the CNAME in their
+   DNS (Squarespace-style panel). See §1 LIVE note for the old-origin
+   implications.
 4. **Team GitHub invites** — Danny's 1–2 posters each need a free GitHub
    account, then Danny invites them: repo → Settings → Collaborators →
    Add people (or Claude can via `gh api` once given usernames).
