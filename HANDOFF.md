@@ -40,8 +40,19 @@ Read these first to orient:
 - **Netlify site** `gbm-summit-2026`, id `d5583fc0-8787-4bd5-92f8-56027e940f91`,
   team "General Baptist Ministries". The Mac's netlify-cli is **already
   authenticated** (token in `~/Library/Preferences/netlify/config.json`).
-- **Deploy:** `npm run build && netlify deploy --prod --dir=dist` (manual; NOT
-  git-connected yet). Commit each batch to git afterward.
+- **GitHub (since 2026-07-08 late):** private repo
+  **github.com/dannydunivan/gbsummit-app** (Danny's account `dannydunivan`;
+  gh CLI at `~/.local/bin/gh` is authenticated as him). **Deploys are now
+  automatic:** `.github/workflows/deploy.yml` builds + deploys to Netlify
+  prod on every push to main (secrets `NETLIFY_AUTH_TOKEN`/`NETLIFY_SITE_ID`
+  in repo secrets). VERIFIED end-to-end incl. a GitHub-web-side edit.
+  **Normal flow now: commit AND `git push` — the push IS the deploy.**
+  Manual `netlify deploy --prod --dir=dist` still works as a fallback.
+  Team announcement editing: `POSTING-ANNOUNCEMENTS.md` (in repo root) is
+  the nontechnical guide; edit link
+  https://github.com/dannydunivan/gbsummit-app/edit/main/src/content/2026/announcements.json.
+  GOTCHA: GitHub snapshots secrets when a run is TRIGGERED — a run queued
+  before a secret existed fails even if the step executes after.
 - **Contact form:** Netlify Forms, form name `contact` → email notification to
   **carol.lawrence@generalbaptist.com** (hook verified end-to-end). The hidden
   static `<form name="contact">` in `index.html` is REQUIRED for detection —
@@ -131,11 +142,9 @@ Read these first to orient:
    should happen BEFORE wide promotion/QR codes, since installs (and now push
    subscriptions) don't migrate across origins. Claude generates the DNS
    instructions once the domain is added in Netlify.
-4. **GitHub decision still open** — discussed for the live-edit announcements
-   bridge; he wants "me + 1–2 team members" as posters but paused on account
-   ownership (GBM org account vs personal). Push shipped WITHOUT GitHub
-   (Netlify functions + Blobs), so GitHub is now only needed for
-   edit-without-Claude during the event.
+4. **Team GitHub invites** — Danny's 1–2 posters each need a free GitHub
+   account, then Danny invites them: repo → Settings → Collaborators →
+   Add people (or Claude can via `gh api` once given usernames).
 5. **His planned announcements** — invited to send the full list (text +
    release day/time each) to bake into announcements.json before July 13.
 6. **Team re-onboarding** — team members who installed before 2026-07-08
@@ -149,20 +158,19 @@ precache 2.9 MB → 955 KiB); runtime-fetched announcements.json; **Web Push
 end-to-end** (was "Phase 2 Firebase FCM" — shipped Firebase-free instead,
 see §4). Both deployed + verified live.
 
+DONE 2026-07-08 late: **GitHub bridge** — repo + Actions auto-deploy +
+posting guide, verified end-to-end (see §3). Announcements are now fully
+self-serve for anyone invited to the repo.
+
 Remaining, in priority order:
-1. **Posting announcements during the event**: today = edit
-   `src/content/2026/announcements.json`, build, deploy (Claude does it;
-   push + feed then flow automatically). To remove Claude from the loop,
-   finish the GitHub bridge (repo + git-connected Netlify deploy + edit in
-   GitHub web UI) — BLOCKED on Danny's account-ownership decision (§6.4).
-2. Hourly `registration.update()` check so mid-event redeploys reach phones
+1. Hourly `registration.update()` check so mid-event redeploys reach phones
    that stay open. (Less urgent now: the feed itself refreshes every 5 min
    without a SW update; only app-shell changes need this.)
-3. Dead-code sweep: README badly stale (predates push); unused
+2. Dead-code sweep: README badly stale (predates push + GitHub); unused
    `EVENT.registrationUrl/tagline/highlights/venuePhone`, `Speaker.sessionIds`;
    orphaned CSS from the old Info tab (`.venue-card`, `.info-facts`,
    `.tbd-flag`, `.price-*`, `.nearby*`).
-4. Possible admin page for posting announcements (the `addAnnouncement` seam
+3. Possible admin page for posting announcements (the `addAnnouncement` seam
    in `src/state/announcements.tsx` still exists) — only if Danny wants it;
    would pair with a `POST /api/announce` function writing to Blobs.
 
