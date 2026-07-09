@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { subscribeToPush } from '@/lib/push';
 
 /**
  * Install + notification onboarding helpers.
@@ -86,7 +87,12 @@ export function useNotificationPermission() {
     if (!notificationsSupported()) return 'unsupported';
     const result = await Notification.requestPermission();
     setPermission(result as NotifPermission);
-    // Phase 2: on 'granted', register the FCM token here.
+    if (result === 'granted') {
+      // Register this device for Web Push announcements (src/lib/push.ts).
+      subscribeToPush().catch(() => {
+        /* offline or no active SW — syncPushSubscription retries next launch */
+      });
+    }
     return result as NotifPermission;
   };
 

@@ -3,6 +3,16 @@
   command = "npm run build"
   publish = "dist"
 
+# Web Push backend: subscribe endpoint + scheduled sender (see files there).
+[functions]
+  directory = "netlify/functions"
+
+# API routes to functions — must precede the SPA catch-all.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
 # SPA fallback so React Router deep links resolve (also covered by public/_redirects).
 [[redirects]]
   from = "/*"
@@ -18,5 +28,17 @@
 
 [[headers]]
   for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# The push handler is importScripts'd by sw.js — never let it go stale.
+[[headers]]
+  for = "/push-sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+# The live feed: phones re-fetch this; always revalidate at the edge.
+[[headers]]
+  for = "/announcements.json"
   [headers.values]
     Cache-Control = "no-cache"

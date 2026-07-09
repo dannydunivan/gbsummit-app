@@ -1,1 +1,4 @@
+# API routes to functions — must precede the SPA catch-all (this file is
+# processed before netlify.toml redirects).
+/api/*  /.netlify/functions/:splat  200
 /*    /index.html   200

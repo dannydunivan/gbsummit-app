@@ -6,6 +6,10 @@ import './styles/global.css';
 import './styles/app.css';
 import { App } from './App';
 import { AnnouncementsProvider } from './state/announcements';
+import { syncPushSubscription } from './lib/push';
+
+// Keep this device's push registration fresh if alerts were already granted.
+syncPushSubscription();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

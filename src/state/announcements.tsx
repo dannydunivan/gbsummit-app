@@ -50,6 +50,30 @@ export function AnnouncementsProvider({ children }: { children: ReactNode }) {
   const now = useNow();
   const [read, setRead] = useState<Set<string>>(loadRead);
   const [pushed, setPushed] = useState<Announcement[]>([]);
+  // Bundled seed paints instantly; the live /announcements.json replaces it
+  // so a redeployed feed reaches open apps without a new app bundle. The
+  // service worker serves the last good copy when offline (NetworkFirst).
+  const [feed, setFeed] = useState<Announcement[]>(seedAnnouncements);
+
+  useEffect(() => {
+    let cancelled = false;
+    const load = async () => {
+      try {
+        const res = await fetch('/announcements.json', { cache: 'no-cache' });
+        if (!res.ok) return;
+        const data = (await res.json()) as Announcement[];
+        if (!cancelled && Array.isArray(data) && data.length) setFeed(data);
+      } catch {
+        /* offline — keep current feed */
+      }
+    };
+    load();
+    const id = setInterval(load, 5 * 60_000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -65,13 +89,13 @@ export function AnnouncementsProvider({ children }: { children: ReactNode }) {
 
   const announcements = useMemo(() => {
     const nowMs = now.getTime();
-    return [...seedAnnouncements, ...pushed]
+    return [...feed, ...pushed]
       .filter((a) => new Date(a.timestamp).getTime() <= nowMs)
       .sort((a, b) => {
         if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
         return b.timestamp.localeCompare(a.timestamp);
       });
-  }, [pushed, now]);
+  }, [feed, pushed, now]);
 
   const unreadCount = useMemo(
     () => announcements.filter((a) => !read.has(a.id)).length,

@@ -1,7 +1,38 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
+import { readFileSync } from 'node:fs';
+
+/**
+ * Serve + emit the canonical announcements data as /announcements.json.
+ * The same file is bundled into the app as the instant-paint seed
+ * (src/content/2026/announcements.ts); this plugin exposes it as a
+ * runtime-fetchable asset so redeploys update the feed without a new app
+ * bundle, and so the scheduled push sender can read it.
+ */
+const ANNOUNCEMENTS_SRC = fileURLToPath(
+  new URL('./src/content/2026/announcements.json', import.meta.url),
+);
+function announcementsJson(): Plugin {
+  return {
+    name: 'announcements-json',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url?.split('?')[0] !== '/announcements.json') return next();
+        res.setHeader('Content-Type', 'application/json');
+        res.end(readFileSync(ANNOUNCEMENTS_SRC));
+      });
+    },
+    generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: 'announcements.json',
+        source: readFileSync(ANNOUNCEMENTS_SRC, 'utf8'),
+      });
+    },
+  };
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,6 +43,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    announcementsJson(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icons/apple-touch-icon.png', 'icons/icon.svg', 'brand/**/*'],
@@ -36,9 +68,25 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // push-sw.js displays Web Push notifications alongside Workbox.
+        importScripts: ['push-sw.js'],
         globPatterns: ['**/*.{js,css,html,svg,png,jpg,ico,woff2}'],
+        // Don't precache the feed or the push helper — both must update
+        // without waiting for a new service-worker install.
+        globIgnores: ['**/push-sw.js', '**/announcements.json'],
         navigateFallback: 'index.html',
         runtimeCaching: [
+          {
+            // Live announcements feed: always try the network, fall back to
+            // the last good copy when offline.
+            urlPattern: ({ url }) => url.pathname === '/announcements.json',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'announcements-feed',
+              networkTimeoutSeconds: 4,
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
           {
             urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
             handler: 'StaleWhileRevalidate',
