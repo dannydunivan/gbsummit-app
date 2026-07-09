@@ -1,4 +1,4 @@
-# GBM Summit 2026 PWA — Session Handoff (v2, 2026-07-08)
+# GBM Summit 2026 PWA — Session Handoff (v3, 2026-07-08 evening)
 
 Paste this into a new session as context. It captures the current state of the
 live app, every decision made, the environment quirks, and the plan for
@@ -56,12 +56,41 @@ Read these first to orient:
 
 - **Real clock, three phases** (`time.ts`): pre-event countdown card on Home →
   live "Happening Now" during July 13–15 → "That's a wrap" after. No demo clock.
-- **Announcements are timestamp-gated**: items in
-  `src/content/2026/announcements.ts` appear only once their `timestamp`
-  passes, so event-day seeds behave like scheduled announcements. Deployed
-  content is source of truth; localStorage stores **read ids only**
+  A 60-second tick (`src/lib/useNow.ts`) re-renders Home/Schedule/announcements
+  so live state tracks the clock while the app stays open.
+- **WEB PUSH IS LIVE (built + verified on Danny's iPhone 2026-07-08).**
+  Standard VAPID Web Push, NO Firebase (Danny's Google login exists via
+  `firebase login` on this Mac but is unused — kept for a possible Phase 2
+  admin console). Architecture:
+  - `src/lib/push.ts` — VAPID public key + subscribe; `install.ts` subscribes
+    on permission grant; `main.tsx` re-syncs each launch.
+  - `POST /api/subscribe` → `netlify/functions/subscribe.mts` → Netlify Blobs
+    store `push-subs` (key = sha256 of endpoint, idempotent).
+  - `netlify/functions/send-pushes.mts` — scheduled `*/5 * * * *` (in-code
+    config; VERIFIED firing in prod). Reads live `/announcements.json`,
+    pushes newly released items, prunes 404/410 subs, records sent ids in
+    Blobs store `push-state` key `pushed-ids`. Items released >1h ago are
+    marked silently (no first-run/outage blast). Parses naive Central
+    timestamps with pinned `-05:00` (July = CDT).
+  - VAPID keys in Netlify env vars (`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`,
+    `VAPID_SUBJECT`); private key exists NOWHERE else. Public key is also
+    hardcoded in `src/lib/push.ts` (safe, by design). Regenerating keys
+    orphans all subscriptions — don't.
+  - `public/push-sw.js` (importScripts'd into the Workbox SW) shows
+    notifications + focuses/opens app on tap. It and `/announcements.json`
+    are excluded from precache and served `Cache-Control: no-cache`.
+  - Prod log check: `netlify logs --source functions --function send-pushes`
+    (streams live; `--since` history queries are unreliable — a "no logs"
+    answer does NOT mean the cron isn't firing).
+- **Announcements are timestamp-gated AND now runtime-fetched**: canonical
+  data is `src/content/2026/announcements.json` — bundled as instant-paint
+  seed AND served as `/announcements.json` (plugin in vite.config.ts), which
+  the app re-fetches every 5 min (network-first, SW cache fallback). A
+  redeploy updates open apps in ~5 min; release (`timestamp` passing) also
+  triggers the push above. localStorage stores **read ids only**
   (`summit2026.read.v1`). All content must be TRUE — no invented logistics
-  (WiFi/parking items were removed deliberately).
+  (WiFi/parking items were removed deliberately). `/api/*` must stay ABOVE
+  the catch-all in `public/_redirects` (processed before netlify.toml).
 - **Packet button** on the General Association session opens `/packet.pdf` —
   currently a branded placeholder. **Swap in the client's real PDF at
   `public/packet.pdf` (same filename) + redeploy; zero code changes.**
@@ -99,37 +128,43 @@ Read these first to orient:
 2. **Real business packet PDF** → replace `public/packet.pdf`.
 3. **Custom domain `app.gbsummit.org`** — CNAME as a Netlify custom domain
    (NOT a redirect; PWA install/push are origin-scoped). Declined "for now" —
-   should happen BEFORE wide promotion/QR codes, since installs don't migrate
-   across origins. Claude generates the DNS instructions once the domain is
-   added in Netlify.
-4. Ongoing content edits as his team reviews the live link.
+   should happen BEFORE wide promotion/QR codes, since installs (and now push
+   subscriptions) don't migrate across origins. Claude generates the DNS
+   instructions once the domain is added in Netlify.
+4. **GitHub decision still open** — discussed for the live-edit announcements
+   bridge; he wants "me + 1–2 team members" as posters but paused on account
+   ownership (GBM org account vs personal). Push shipped WITHOUT GitHub
+   (Netlify functions + Blobs), so GitHub is now only needed for
+   edit-without-Claude during the event.
+5. **His planned announcements** — invited to send the full list (text +
+   release day/time each) to bake into announcements.json before July 13.
+6. **Team re-onboarding** — team members who installed before 2026-07-08
+   evening should delete + re-add the app and tap Enable Alerts to get push.
+7. Ongoing content edits as his team reviews the live link.
 
-## 7. Remaining development plan (reviewed + agreed, in priority order)
+## 7. Remaining development plan
 
-P1 — on-site correctness/polish (small, do in one batch):
-1. 60-second re-render tick so "Happening Now" updates while the app stays open.
-2. Sticky day-tabs on Schedule have no background — content scrolls through
-   them (`.day-tabs` in `src/styles/app.css`).
-3. Image slimming: hero is 1.4 MB, headshots full-res; precache is ~2.9 MB.
-   Resize (hero ~960w, headshots ~400px) to get first install under ~1 MB.
+DONE 2026-07-08: all of P1 (60s tick, day-tabs background, image slimming —
+precache 2.9 MB → 955 KiB); runtime-fetched announcements.json; **Web Push
+end-to-end** (was "Phase 2 Firebase FCM" — shipped Firebase-free instead,
+see §4). Both deployed + verified live.
 
-P2 — structural:
-4. **No-backend announcements bridge:** move the feed to a runtime-fetched
-   `announcements.json` (network-first, cache fallback) + set up GitHub +
-   git-connected Netlify deploy → during the event, editing one JSON file in
-   the GitHub web UI updates every phone in ~1 min without Firebase. (No push
-   notification — feed only. Set expectations.)
-5. Hourly `registration.update()` check so mid-event redeploys reach phones
-   that stay open.
-6. Dead-code sweep: README still describes removed Registration card and old
-   "Know Before You Go"; `EVENT.registrationUrl/tagline/highlights/venuePhone`
-   and `Speaker.sessionIds` are unused; orphaned CSS from the old Info tab
-   (`.venue-card`, `.info-facts`, `.tbd-flag`, `.price-*`, `.nearby*`).
-
-Phase 2 (needs client decisions): Firebase FCM web push + a simple admin page
-to post announcements (`addAnnouncement` in `src/state/announcements.tsx` is
-the seam; register FCM token on permission grant in `src/state/install.ts`).
-Needs: Firebase project owner + admin email (use a durable org address).
+Remaining, in priority order:
+1. **Posting announcements during the event**: today = edit
+   `src/content/2026/announcements.json`, build, deploy (Claude does it;
+   push + feed then flow automatically). To remove Claude from the loop,
+   finish the GitHub bridge (repo + git-connected Netlify deploy + edit in
+   GitHub web UI) — BLOCKED on Danny's account-ownership decision (§6.4).
+2. Hourly `registration.update()` check so mid-event redeploys reach phones
+   that stay open. (Less urgent now: the feed itself refreshes every 5 min
+   without a SW update; only app-shell changes need this.)
+3. Dead-code sweep: README badly stale (predates push); unused
+   `EVENT.registrationUrl/tagline/highlights/venuePhone`, `Speaker.sessionIds`;
+   orphaned CSS from the old Info tab (`.venue-card`, `.info-facts`,
+   `.tbd-flag`, `.price-*`, `.nearby*`).
+4. Possible admin page for posting announcements (the `addAnnouncement` seam
+   in `src/state/announcements.tsx` still exists) — only if Danny wants it;
+   would pair with a `POST /api/announce` function writing to Blobs.
 
 Phase 3: yearly-rebuild kit — `content/2027/` swap doc.
 
