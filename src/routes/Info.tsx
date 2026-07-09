@@ -34,6 +34,14 @@ export function Info() {
           <p className="faint venue-foot">
             The two sites sit directly across E Deerwood Dr. from each other — an easy walk between.
           </p>
+          <Link
+            to="/maps"
+            className="quick-tile card quick-tile-wide"
+            style={{ marginTop: 'var(--sp-sm)' }}
+          >
+            <Icon name="pin" size={22} />
+            <span>Venue Maps</span>
+          </Link>
         </section>
 
         {/* Kids & Youth */}
@@ -75,10 +83,6 @@ export function Info() {
         {/* Links out */}
         <section>
           <div className="quick-grid" style={{ marginTop: 'var(--sp-md)' }}>
-            <Link to="/maps" className="quick-tile card">
-              <Icon name="pin" size={22} />
-              <span>Venue Maps</span>
-            </Link>
             <Link to="/dining" className="quick-tile card">
               <Icon name="location" size={22} />
               <span>Where to Eat</span>
@@ -87,7 +91,7 @@ export function Info() {
               <Icon name="info" size={22} />
               <span>Ask a Question</span>
             </Link>
-            <Link to="/sponsors" className="quick-tile card">
+            <Link to="/sponsors" className="quick-tile card quick-tile-wide">
               <Icon name="heart" size={22} />
               <span>Our Sponsors</span>
             </Link>
