@@ -38,7 +38,11 @@
     Cache-Control = "no-cache"
 
 # The live feed: phones re-fetch this; always revalidate at the edge.
+# CORS "*" keeps the feed readable from installs on the pre-domain origin
+# (gbm-summit-2026.netlify.app now 301s here; the redirected fetch is
+# cross-origin and needs this header to succeed).
 [[headers]]
   for = "/announcements.json"
   [headers.values]
     Cache-Control = "no-cache"
+    Access-Control-Allow-Origin = "*"
