@@ -75,6 +75,10 @@ export function Info() {
         {/* Links out */}
         <section>
           <div className="quick-grid" style={{ marginTop: 'var(--sp-md)' }}>
+            <Link to="/maps" className="quick-tile card">
+              <Icon name="pin" size={22} />
+              <span>Venue Maps</span>
+            </Link>
             <Link to="/dining" className="quick-tile card">
               <Icon name="location" size={22} />
               <span>Where to Eat</span>
