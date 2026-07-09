@@ -57,3 +57,7 @@ within 5 minutes of the announcement's set time.
 - Keep quotes as plain `"` characters and don't delete the brackets.
 - Announcements more than 1 hour past their timestamp never push — feed only.
 - Everything must be TRUE and verified — no guessed room numbers or times.
+
+---
+
+_Saving this file (or the announcements file) auto-publishes the app — verified working 2026-07-08._
