@@ -45,9 +45,6 @@ export function Info() {
             {programs.map((p) => (
               <div key={p.id} className="card card-pad program">
                 <div className="program-head">
-                  <span className="program-icon" aria-hidden="true">
-                    {p.icon}
-                  </span>
                   <div>
                     <div className="program-title">{p.title}</div>
                     <div className="faint program-audience">

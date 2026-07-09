@@ -13,7 +13,6 @@ export interface DayPlan {
 export interface ProgramTrack {
   id: string;
   title: string;
-  icon: string;
   audience: string;
   location: string;
   days: DayPlan[];
@@ -24,7 +23,6 @@ export const programs: ProgramTrack[] = [
   {
     id: 'kids',
     title: 'Kids Programming',
-    icon: '🧒',
     audience: 'Nursery – 6th grade',
     location: 'Connection Point Church',
     days: [
@@ -37,7 +35,6 @@ export const programs: ProgramTrack[] = [
   {
     id: 'youth',
     title: 'Youth Programming',
-    icon: '🧑‍🎤',
     audience: '7th – 12th grade',
     location: 'Connection Point Church & off-site',
     days: [

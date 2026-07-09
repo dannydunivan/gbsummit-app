@@ -682,10 +682,6 @@
   align-items: center;
   margin-bottom: var(--sp-md);
 }
-.program-icon {
-  font-size: 26px;
-  line-height: 1;
-}
 .program-title {
   font-family: var(--font-display);
   font-weight: 800;
