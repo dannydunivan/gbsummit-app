@@ -1,0 +1,30 @@
+# Auto-deploy: any push to main (including announcements.json edits made in
+# the GitHub web UI) builds the app and publishes it to Netlify production.
+# Secrets: NETLIFY_AUTH_TOKEN + NETLIFY_SITE_ID (set via `gh secret set`).
+name: Deploy to Netlify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Deploy to Netlify (production)
+        run: npx --yes netlify-cli@26.1.0 deploy --prod --dir=dist --message "GitHub ${{ github.sha }}"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
