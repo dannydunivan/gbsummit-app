@@ -132,6 +132,10 @@ export function Home() {
               <Icon name="bell" size={22} />
               <span>Ask a Question</span>
             </Link>
+            <Link to="/sponsors" className="quick-tile card quick-tile-wide">
+              <Icon name="heart" size={22} />
+              <span>Our Sponsors</span>
+            </Link>
           </div>
         </section>
 
