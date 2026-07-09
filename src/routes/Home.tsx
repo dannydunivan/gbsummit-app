@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import { EVENT } from '@/content/2026';
-import { appNow, comingUpNext, daysUntilEvent, eventPhase, relativeTime } from '@/lib/time';
+import { comingUpNext, daysUntilEvent, eventPhase, relativeTime } from '@/lib/time';
+import { useNow } from '@/lib/useNow';
 import { useAnnouncements } from '@/state/announcements';
 import { SessionCard } from '@/components/SessionCard';
 import { Icon } from '@/components/Icon';
 import { InstallCard } from '@/components/InstallCard';
 
 export function Home() {
-  const now = appNow();
+  const now = useNow();
   const phase = eventPhase(now);
   const next = comingUpNext(now);
   const { announcements, markAllRead } = useAnnouncements();
@@ -18,7 +19,7 @@ export function Home() {
     <div>
       {/* Hero */}
       <header className="home-hero">
-        <img className="home-hero-bg" src="/brand/summit-hero.png" alt="" aria-hidden="true" />
+        <img className="home-hero-bg" src="/brand/summit-hero.jpg" alt="" aria-hidden="true" />
         <div className="home-hero-scrim" />
         <div className="home-hero-content">
           <img className="home-logo" src="/brand/summit26-logo-white.png" alt="Summit 26" />

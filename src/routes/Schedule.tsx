@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { DAYS, sessionsForDay, type DayId } from '@/content/2026';
 import { appNow, liveSessions, localDateId } from '@/lib/time';
+import { useNow } from '@/lib/useNow';
 import { SessionCard } from '@/components/SessionCard';
 
 /** Pick the day that matches "now" if the event is running, else Day 1. */
@@ -11,7 +12,7 @@ function defaultDay(): DayId {
 }
 
 export function Schedule() {
-  const now = appNow();
+  const now = useNow();
   const liveIds = new Set(liveSessions(now).map((s) => s.id));
   const [day, setDay] = useState<DayId>(defaultDay);
   const daySessions = sessionsForDay(day);

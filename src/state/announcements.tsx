@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import { seedAnnouncements, type Announcement } from '@/content/2026';
-import { appNow } from '@/lib/time';
+import { useNow } from '@/lib/useNow';
 
 /**
  * Announcements store.
@@ -47,6 +47,7 @@ function loadRead(): Set<string> {
 }
 
 export function AnnouncementsProvider({ children }: { children: ReactNode }) {
+  const now = useNow();
   const [read, setRead] = useState<Set<string>>(loadRead);
   const [pushed, setPushed] = useState<Announcement[]>([]);
 
@@ -63,14 +64,14 @@ export function AnnouncementsProvider({ children }: { children: ReactNode }) {
   }, [read]);
 
   const announcements = useMemo(() => {
-    const now = appNow().getTime();
+    const nowMs = now.getTime();
     return [...seedAnnouncements, ...pushed]
-      .filter((a) => new Date(a.timestamp).getTime() <= now)
+      .filter((a) => new Date(a.timestamp).getTime() <= nowMs)
       .sort((a, b) => {
         if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
         return b.timestamp.localeCompare(a.timestamp);
       });
-  }, [pushed]);
+  }, [pushed, now]);
 
   const unreadCount = useMemo(
     () => announcements.filter((a) => !read.has(a.id)).length,

@@ -368,10 +368,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-sm);
-  padding: 0 var(--sp-lg);
+  padding: var(--sp-sm) var(--sp-lg);
   position: sticky;
   top: 0;
   z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-soft);
 }
 .day-tab {
   display: flex;
