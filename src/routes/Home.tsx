@@ -6,6 +6,7 @@ import { useAnnouncements } from '@/state/announcements';
 import { SessionCard } from '@/components/SessionCard';
 import { Icon } from '@/components/Icon';
 import { InstallCard } from '@/components/InstallCard';
+import { LinkifiedText } from '@/components/LinkifiedText';
 
 export function Home() {
   const now = useNow();
@@ -93,7 +94,9 @@ export function Home() {
                 <span className="faint announcement-time">{relativeTime(pinned.timestamp, now)}</span>
               </div>
               <h3>{pinned.title}</h3>
-              <p className="muted">{pinned.body}</p>
+              <p className="muted">
+                <LinkifiedText text={pinned.body} />
+              </p>
             </article>
           )}
 
@@ -104,7 +107,9 @@ export function Home() {
                   <h3>{a.title}</h3>
                   <span className="faint announcement-time">{relativeTime(a.timestamp, now)}</span>
                 </div>
-                <p className="muted">{a.body}</p>
+                <p className="muted">
+                  <LinkifiedText text={a.body} />
+                </p>
               </li>
             ))}
           </ul>

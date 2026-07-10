@@ -1011,3 +1011,10 @@
   font-size: 12.5px;
   margin-top: var(--sp-sm);
 }
+.body-link {
+  color: var(--red);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
