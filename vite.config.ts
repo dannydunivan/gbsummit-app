@@ -75,6 +75,10 @@ export default defineConfig({
         // without waiting for a new service-worker install.
         globIgnores: ['**/push-sw.js', '**/announcements.json'],
         navigateFallback: 'index.html',
+        // Navigations to real files (e.g. /packet.pdf) must hit the network,
+        // not the app shell — without this the packet opens the 404 screen
+        // inside the installed PWA. Routes never contain a dot.
+        navigateFallbackDenylist: [/\/[^/?]+\.[a-z0-9]+(\?.*)?$/i],
         runtimeCaching: [
           {
             // Live announcements feed: always try the network, fall back to
