@@ -143,9 +143,8 @@ Read these first to orient:
 
 1. Civic Center copy — APPROVED as-is 2026-07-09 (client signed off on the
    existing `VENUES.civic.blurb`).
-2. **Real business packet PDF** → replace `public/packet.pdf` — IN PROGRESS,
-   Danny is producing it (2026-07-09). Swap same filename + push; no code
-   changes.
+2. Real GA packet — DONE 2026-07-10 (25-page Proceedings & Reports for the
+   156th General Association, live at /packet.pdf).
 3. **Custom domain — DONE 2026-07-09.** app.gbsummit.org is the site's
    PRIMARY custom domain (Netlify required primary, not alias; free plan
    can't disable the eventual netlify.app→primary redirect). Cert issued,
