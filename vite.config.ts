@@ -92,6 +92,17 @@ export default defineConfig({
             },
           },
           {
+            // GA packet: served instantly from cache once warmed (see
+            // warmPacketCache in src/main.tsx), refreshed in the background
+            // so a redeployed packet still reaches devices.
+            urlPattern: ({ url }) => url.pathname === '/packet.pdf',
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'documents',
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
             urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
             handler: 'StaleWhileRevalidate',
             options: { cacheName: 'google-fonts-stylesheets' },
