@@ -10,6 +10,7 @@ import { Breakouts } from './routes/Breakouts';
 import { Dining } from './routes/Dining';
 import { Sponsors } from './routes/Sponsors';
 import { Maps } from './routes/Maps';
+import { NextSteps } from './routes/NextSteps';
 import { Contact } from './routes/Contact';
 import { NotFound } from './routes/NotFound';
 
@@ -35,6 +36,7 @@ export function App() {
           <Route path="/dining" element={<Dining />} />
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/maps" element={<Maps />} />
+          <Route path="/next-steps" element={<NextSteps />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

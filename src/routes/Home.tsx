@@ -139,6 +139,16 @@ export function Home() {
           </div>
         </section>
 
+        {/* Next Steps — events, courses & resources beyond Summit */}
+        <section>
+          <Link to="/next-steps" className="btn btn-primary nextsteps-btn">
+            Next Steps <Icon name="chevron" size={18} />
+          </Link>
+          <p className="faint nextsteps-btn-sub">
+            Events, courses, and resources to take home from Summit.
+          </p>
+        </section>
+
         <footer className="home-footer faint">
           {EVENT.org} · {EVENT.name}
         </footer>
