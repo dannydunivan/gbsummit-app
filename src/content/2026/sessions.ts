@@ -195,7 +195,7 @@ export const sessions: Session[] = [
     endTime: '09:00',
     title: 'Doors Open',
     type: 'break',
-    location: 'Worship Center',
+    location: 'Civic Center',
     speakerIds: [],
     description: 'Doors open for the final morning of Summit.',
   },
